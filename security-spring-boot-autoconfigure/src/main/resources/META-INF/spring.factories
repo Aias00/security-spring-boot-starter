@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.aias.springboot.security.config.SecurityAutoConfiguration,\
+com.aias.springboot.security.config.WebApplicationConfig
