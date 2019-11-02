@@ -36,7 +36,7 @@ public class SecurityProperties {
 	public static class JwtProperties {
 		private String secret;
 		private int expiration;
-		private String headerKey;
+		private String signatureAlgorithmName;
 
 		private String[] excludePathPatterns;
 	}

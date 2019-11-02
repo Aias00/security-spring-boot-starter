@@ -26,17 +26,11 @@ public class JwtTokenUtil {
 	// (目标受众)
 	private static final String CLAIM_KEY_CREATED = "created";
 
-	public static final String ANONYMOUS_USER = "anonymousUser";
-
 	private String secret;
 
 	private Integer expirationDay;
 
-	public String headerKey;
-
-	public String getHeaderKey() {
-		return headerKey;
-	}
+	private String signatureAlgorithmName;
 
 	@Autowired
 	private SecurityProperties properties;
@@ -45,7 +39,8 @@ public class JwtTokenUtil {
 	public void init() {
 		this.secret = this.properties.getJwt().getSecret();
 		this.expirationDay = this.properties.getJwt().getExpiration();
-		this.headerKey = this.properties.getJwt().getHeaderKey();
+		this.signatureAlgorithmName = this.properties.getJwt()
+				.getSignatureAlgorithmName();
 	}
 
 	public String getUsernameFromToken(String token) {
@@ -96,7 +91,6 @@ public class JwtTokenUtil {
 	}
 
 	private Date generateExpirationDate() {
-
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.add(5, expirationDay);
@@ -128,7 +122,9 @@ public class JwtTokenUtil {
 	String generateToken(Map<String, Object> claims) {
 		return Jwts.builder().setClaims(claims)
 				.setExpiration(generateExpirationDate())
-				.signWith(SignatureAlgorithm.HS512, secret).compact();
+				.signWith(SignatureAlgorithm.forName(signatureAlgorithmName),
+						secret)
+				.compact();
 	}
 
 	public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
@@ -163,14 +159,4 @@ public class JwtTokenUtil {
 		return (userIdEqual && !isTokenExpired);
 	}
 
-	public static String string2Unicode(String string) {
-		StringBuffer unicode = new StringBuffer();
-		for (int i = 0; i < string.length(); i++) {
-			// 取出每一个字符
-			char c = string.charAt(i);
-			// 转换为unicode
-			unicode.append("\\u" + Integer.toHexString(c));
-		}
-		return unicode.toString();
-	}
 }
