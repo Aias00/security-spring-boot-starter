@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.aias.springboot.security.properties.SecurityProperties;
+
 import io.jsonwebtoken.*;
 
 @Component
@@ -37,13 +39,13 @@ public class JwtTokenUtil {
 	}
 
 	@Autowired
-	private JwtProperties properties;
+	private SecurityProperties properties;
 
 	@PostConstruct
 	public void init() {
-		this.secret = this.properties.getSecret();
-		this.expirationDay = this.properties.getExpiration();
-		this.headerKey = this.properties.getHeaderKey();
+		this.secret = this.properties.getJwt().getSecret();
+		this.expirationDay = this.properties.getJwt().getExpiration();
+		this.headerKey = this.properties.getJwt().getHeaderKey();
 	}
 
 	public String getUsernameFromToken(String token) {

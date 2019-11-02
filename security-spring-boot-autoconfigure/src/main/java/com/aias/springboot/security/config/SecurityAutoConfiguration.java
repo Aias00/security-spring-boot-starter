@@ -15,9 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.aias.springboot.security.jwt.JwtAuthInterceptor;
-import com.aias.springboot.security.jwt.JwtProperties;
+import com.aias.springboot.security.properties.SecurityProperties;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
@@ -32,8 +32,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
  * @author <a> liuhy </a><br>
  */
 @Configuration
-@EnableConfigurationProperties({ JwtProperties.class,
-		SecurityProperties.class })
+@EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 		implements WebMvcConfigurer {
 	@Autowired
@@ -42,9 +41,8 @@ public class SecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 	@Autowired
 	private SecurityProperties securityProperties;
 	@Autowired
-	private JwtAuthInterceptor jwtAuthInterceptor;
-    @Autowired
-    private JwtProperties jwtProperties;
+	private HandlerInterceptorAdapter jwtAuthInterceptor;
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
@@ -101,6 +99,7 @@ public class SecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 				.excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png",
 						"/**/*.jpg", "/**/*.jpeg", "/*.html", "/**/*.html",
 						"/*.jpg", "/*.ico", "/resources/**")
-				.excludePathPatterns(jwtProperties.getExcludePathPatterns());
+				.excludePathPatterns(
+						securityProperties.getJwt().getExcludePathPatterns());
 	}
 }

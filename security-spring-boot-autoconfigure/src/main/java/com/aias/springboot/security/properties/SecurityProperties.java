@@ -1,4 +1,4 @@
-package com.aias.springboot.security.config;
+package com.aias.springboot.security.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -20,6 +20,7 @@ public class SecurityProperties {
 
 	private HttpSecurityProperties http;
 	private WebSecurityProperties web;
+	private JwtProperties jwt;
 
 	@Data
 	public static class HttpSecurityProperties {
@@ -31,4 +32,13 @@ public class SecurityProperties {
 	public static class WebSecurityProperties {
 		private String[] ignorePages;
 	}
+	@Data
+	public static class JwtProperties {
+		private String secret;
+		private int expiration;
+		private String headerKey;
+
+		private String[] excludePathPatterns;
+	}
+
 }
