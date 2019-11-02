@@ -1,4 +1,0 @@
-jwt:
-  secret: TUnjtu9&(OuJuu8j
-  expiration: 30
-  header-key: Authorization

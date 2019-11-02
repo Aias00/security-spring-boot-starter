@@ -15,9 +15,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = JwtProperties.JWT_PROPERTIES_PREFIX)
 public class JwtProperties {
-   public static final String JWT_PROPERTIES_PREFIX = "jwt";
+   static final String JWT_PROPERTIES_PREFIX = "jwt";
    private String secret;
    private int expiration;
    private String headerKey;
 
+   private String[] excludePathPatterns;
 }
