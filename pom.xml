@@ -24,7 +24,7 @@
         <jjwt.version>0.6.0</jjwt.version>
         <lombok.version>1.18.8</lombok.version>
         <guava.version>27.0.1-jre</guava.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <common-lang3.version>3.7</common-lang3.version>
         <commons-validator.version>1.6</commons-validator.version>
     </properties>
